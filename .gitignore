@@ -21,4 +21,4 @@ out/
 bin/
 .myeclipse
 .hprof
-out/
+/out/
