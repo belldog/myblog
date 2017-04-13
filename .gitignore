@@ -9,8 +9,6 @@
 *.iws
 /ROOT/
 
-
-
 # Mac
 .DS_Store
 
@@ -23,4 +21,4 @@ out/
 bin/
 .myeclipse
 .hprof
-out/
+/out/
