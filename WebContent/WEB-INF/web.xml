@@ -19,6 +19,37 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!--该Filter为Spring框架自带的过滤器，通过观看该类源码可知，作用为：如果客户端发送过来的请求的编码在请求头里并没有，
+    开发人员需要在后端自己选择合适的encoding来解析request过来的参数。这个问题的解决办法很简单，就是写一个filter来过滤所有请求，
+    然后设置一下request的characterEncoding，该类有一个属性forceEncoding,默认为false,则如果客户端传来的request带了characterEncoding,
+    则不会做任何操作，如果没带，则会设置request的characterEncoding为我们所设置的。如果forceEncoding属性为true,则不管客户端请求过来
+    有没有指明encoding,都会强制设置request的characterEncoding为我们所设置的，同时还会强制设置response的characterEncoding为我们所设置的（通常是我们不希望的）-->
+    <!--另外值的注意的是，这里有个陷阱，整个web应用里，这个filter的拦截顺序必须是“第一个”，否则还是会出现乱码问题。这是因为（至少在tomcat里）:
+    1.request对象的parameter并不是一开始就解析的，它是等你第一次调用getParameter*等凡和获得请求参数有关的方法的时候才解析的
+    2.parameter一旦被解析过一次，那就不会再次被解析
+    所以如果在CharacterEncodingFilter之前有另外一个filter，而这个filter调用了getParameter*方法，那么就有可能使用错误的encoding来解析，从而造成乱码问题，
+    所以这个Filter必须放在所有设计到Parameter的Filter的第一个才能正确的起到应有的作用，例如他放到了DispatcherServlet的前面-->
+    <!--对于response的setCharacterEncoding到底干了啥？作用我认为似乎就是更改HTTP报头中charset的内容，仅此而已，不会更改HttpBody中的编码格式。
+    所以我想到使用setContentType()来显式的设置输出的报文信息,例如setContentType("text/json";charset=utf-8);ContentType指出输出的字符编码只有在给定的content type
+    下面才有效。也即必须在有setContentType的前提下setCharacterEncoding()才有效，但是问题是setContentType()完全可以同时设置charset，那何必在setCharacterEncoding呢？
+    所以这也是一般设置forceEncoding为false的原因-->
+    <filter>
+        <filter-name>characterEncoding</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>false</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterEncoding</filter-name>
+        <url-pattern>*.shtml</url-pattern>
+    </filter-mapping>
+
     <!--初始化Spring“子容器”-->
     <servlet>
         <servlet-name>spring-blog</servlet-name>
