@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context" xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -9,15 +10,54 @@
     <!--<mvc:annotation-driven /> 是一种简写形式，完全可以手动配置替代这种简写形式，简写形式可以让初学都快速应用默认配置方案。<mvc:annotation-driven />
     会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的。-->
     <mvc:annotation-driven/>
-   <!-- use-default-filters配置为false时：
-    只扫描include配置的com.zjw.blog包下的@Controller，不扫描@Service和@Repository等等-->
+    <!-- use-default-filters配置为false时：
+     只扫描include配置的com.zjw.blog包下的@Controller，不扫描@Service和@Repository等等-->
     <context:component-scan base-package="com.zjw.blog" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
+    <!--配置通用视图解析器-->
     <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/"></property>
-        <property name="suffix" value=".jsp"></property>
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/"
+          p:suffix=".jsp" p:order="1"/>
+
+
+    <!--配置Freemarker视图解析器-->
+    <bean id="freemarkerViewResolver"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass"
+                  value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="prefix" value="pages/"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html; charset=utf-8"/>
+        <property name="cache" value="true"/>
+        <!-- 有多种解析器，添加下面这行，让freemarker解析器优先 -->
+        <property name="order" value="0"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
     </bean>
+    <!--建一个PropertiesFactoryBean的bean来管理freemarker.properties-->
+    <bean id="freemarkerConfiguration"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:freemarker.properties"/>
+    </bean>
+    <!--建一个PropertiesFactoryBean的bean来管理freemarker-enum.properties-->
+    <bean id="freemarkerEnumConfiguration"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:freemarker-enum.properties"/>
+    </bean>
+    <!--配置Freemarker,这里的FreeMarkerConfigurer继承了org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer，之所以要这样配是因为要加一些自定义的东西-->
+    <bean id="freemarkerConfig" class="com.zjw.blog.ext.FreeMarkerConfigurer">
+        <!-- 你的模版文件的存放路径，我这里存放在WEB-INF目录下文件夹里 -->
+        <property name="templateLoaderPath" value="/WEB-INF/"/>
+        <!-- 假设你需要使用freemarker的自定义标签或是设置一些常用的全局变量，这里还需要增加这一段 -->
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape"/>
+            </map>
+        </property>
+        <property name="freemarkerSettings" ref="freemarkerConfiguration"/>
+        <property name="enumSettings" ref="freemarkerEnumConfiguration"/>
+    </bean>
+
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
 </beans>
