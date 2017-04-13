@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置context:property-placeholder，将会自动生成PropertySourcesPlaceholderConfigurer的Bean,也可以显示配置该bean,该bean会把location对应文件
+    配置信息存储到Spring容器，我们可以来这样使用：
+    <bean id='dataSource' destroy-method='close'  class='org.apache.commons.dbcp.BasicDataSource'>
+              <property name='driverClassName' value='${jdbc.driverClassName}'/>
+              <property name='url' value='${jdbc.url}'/>
+              <property name='username' value='${jdbc.username}'/>
+              <property name='password' value='${jdbc.password}'/>
+    </bean>
+     或
+    @Value('${jdbc.driverClassName}') private String driverClassName;
+    @Value('${jdbc.url}')             private String dbUrl;
+    @Value('${jdbc.username}')        private String dbUserName;
+    @Value('${jdbc.password}')        private String dbPassword;
+    @Bean
+    public BasicDataSource dataSource() {
+    BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setDriverClassName(driverClassName);
+    dataSource.setUrl(dbUrl);
+    dataSource.setUsername(dbUserName);
+    dataSource.setPassword(dbPassword);
+    return dataSource;}
+    或 通过Environment(有待实验)，例如
+    @Autowired
+    Environment env;
+    @Bean
+    public BasicDataSource dataSource() {
+    BasicDataSource dataSource = new BasicDataSource();
+    dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+    dataSource.setUrl(env.getProperty("jdbc.url"));
+    dataSource.setUsername(env.getProperty("jdbc.username"));
+    dataSource.setPassword(env.getProperty("jdbc.password"));
+    return dataSource;}
+    -->
+   <!-- <context:property-placeholder
+            location="属性文件，多个之间逗号分隔"
+            file-encoding="文件编码"
+            ignore-resource-not-found="是否忽略找不到的属性文件"
+            ignore-unresolvable="是否忽略解析不到的属性，如果不忽略，找不到将抛出异常"
+            properties-ref="本地Properties配置"
+            local-override="是否本地覆盖模式，即如果true，那么properties-ref的属性将覆盖location加载的属性，否则相反"
+            system-properties-mode="系统属性模式，默认ENVIRONMENT（表示先找ENVIRONMENT，再找properties-ref/location的），NEVER：表示永远不用ENVIRONMENT的，OVERRIDE类似于ENVIRONMENT"
+            order="顺序"
+    />-->
+    <context:property-placeholder location="classpath:*.properties" ignore-resource-not-found="true" />
+    <!-- use-default-filters配置为true或不配时：
+    排除exclude配置的com.zjw.blog包下的@Controller，只扫描@Service和@Repository等等-->
+    <context:component-scan base-package="com.zjw.blog">
+        <!--排除@Controller注解（为什么要这样配，不这样配事物就不起作用是为什么？）-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    <!--引入hibernate配置-->
+    <import resource="spring-hibernate.xml" />
 
 </beans>

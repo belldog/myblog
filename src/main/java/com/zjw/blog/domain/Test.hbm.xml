@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.zjw.blog.domain.Test"
+           table="tb_test" dynamic-insert="true" dynamic-update="true">
+        <cache usage="read-write" region="tb_distribute_point"/>
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="native"/>
+        </id>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!-- 配置数据源 ,用的是阿里巴巴druid数据库连接池-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+       <!-- characterEncoding=utf-8&useUnicode=true&autoReconnect=true的作用是mysql数据库用的是gbk编码，而项目数据库用的是utf-8编码。
+       这时候如果添加了useUnicode=true&characterEncoding=UTF-8 ，那么作用有如下两个方面：
+      1. 存数据时：数据库在存放项目数据的时候会先用UTF-8格式将数据解码成字节码，然后再将解码后的字节码重新使用GBK编码存放到数据库中。
+      2.取数据时：在从数据库中取数据的时候，数据库会先将数据库中的数据按GBK格式解码成字节码，然后再将解码后的字节码重新按UTF-8格式编码数据，
+      最后再将数据返回给客户端。
+      autoReconnect=true是自动重连-->
+        <property name="url" value="${db.jdbcUrl}" />
+        <property name="username" value="${db.user}" />
+        <property name="password" value="${db.password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${db.minPoolSize}" />
+        <!-- 连接池最大使用连接数量 -->
+        <property name="maxActive" value="${db.maxPoolSize}" />
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${db.minPoolSize}" />
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <!--用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用-->
+        <property name="validationQuery" value="SELECT 'x'" />
+        <!--建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。-->
+        <property name="testWhileIdle" value="true" />
+        <!--申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。默认为true-->
+        <property name="testOnBorrow" value="false" />
+        <!--归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能,默认为false-->
+        <property name="testOnReturn" value="false" />
+        <!-- <property name="poolPreparedStatements" value="false" /> <property
+            name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
+        <!-- 监控数据库 -->
+        <property name="filters" value="stat,wall,mergeStat" />
+
+    </bean>
+
+    <!-- 配置hibernate session工厂 -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext
+                </prop>
+                <prop key="hibernate.autoReconnect">true</prop>
+                <prop key="hibernate.jdbc.fetch_size">32</prop>
+                <prop key="hibernate.jdbc.batch_size">20</prop>
+                <prop key="hibernate.max_fetch_depth">1</prop>
+                <!--是否启用hibernate二级缓存-->
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <!--是否启用查询缓存-->
+                <prop key="hibernate.cache.use_query_cache">false</prop>
+
+            </props>
+        </property>
+       <!-- 扫描hbm.xml方式映射数据库，与下面那个其实两者选择一种就可以-->
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:com/zjw/blog/domain/*.hbm.xml</value>
+            </list>
+        </property>
+        <!-- 自动扫描注解方式配置的hibernate类文件 -->
+        <property name="packagesToScan" value="com.zjw.blog.domain" />
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- 注解方式配置事物 -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+   <!-- 配置HibernateTemplate主要是为了使用Hibernate封装好与数据库打交道的方法-->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
