@@ -42,6 +42,7 @@ public class FreeMarkerConfigurer extends org.springframework.web.servlet.view.f
 
 				TemplateHashModel staticModels = beansWrapper.getStaticModels();
 				TemplateHashModel roundingModeStatics = (TemplateHashModel) staticModels.get(className);
+                //添加共享变量
 				this.getConfiguration().setSharedVariable(name, roundingModeStatics);
 			}
 		}
@@ -57,6 +58,7 @@ public class FreeMarkerConfigurer extends org.springframework.web.servlet.view.f
 
 				TemplateHashModel enumModels = beansWrapper.getEnumModels();
 				TemplateHashModel roundingModeStatics = (TemplateHashModel) enumModels.get(className);
+                //添加共享变量
 				this.getConfiguration().setSharedVariable(name, roundingModeStatics);
 			}
 		}
