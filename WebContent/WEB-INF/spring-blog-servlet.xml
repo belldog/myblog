@@ -27,6 +27,7 @@
           class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="viewClass"
                   value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <!--这里配置的pages/与freemarkerConfig配置的路径/WEB-INF/合起来才是真正的路径，即/WEB-INF/pages/，如果在freemarkerConfig配置全了，这里可以不用配-->
         <property name="prefix" value="pages/"/>
         <property name="suffix" value=".ftl"/>
         <property name="contentType" value="text/html; charset=utf-8"/>

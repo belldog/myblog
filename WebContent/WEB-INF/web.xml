@@ -60,6 +60,7 @@
     <!--DispatcherServlet的映射地址-->
     <servlet-mapping>
         <servlet-name>spring-blog</servlet-name>
+        <!--这个地址是一切的源头,请求必须符合这个才能进入springMVC-->
         <url-pattern>*.shtml</url-pattern>
     </servlet-mapping>
     
