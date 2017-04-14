@@ -28,7 +28,7 @@
     1.request对象的parameter并不是一开始就解析的，它是等你第一次调用getParameter*等凡和获得请求参数有关的方法的时候才解析的
     2.parameter一旦被解析过一次，那就不会再次被解析
     所以如果在CharacterEncodingFilter之前有另外一个filter，而这个filter调用了getParameter*方法，那么就有可能使用错误的encoding来解析，从而造成乱码问题，
-    所以这个Filter必须放在所有设计到Parameter的Filter的第一个才能正确的起到应有的作用，例如他放到了DispatcherServlet的前面-->
+    所以这个Filter必须放在所有设计到Parameter的Filter的第一个才能正确的起到应有的作用-->
     <!--对于response的setCharacterEncoding到底干了啥？作用我认为似乎就是更改HTTP报头中charset的内容，仅此而已，不会更改HttpBody中的编码格式。
     所以我想到使用setContentType()来显式的设置输出的报文信息,例如setContentType("text/json";charset=utf-8);ContentType指出输出的字符编码只有在给定的content type
     下面才有效。也即必须在有setContentType的前提下setCharacterEncoding()才有效，但是问题是setContentType()完全可以同时设置charset，那何必在setCharacterEncoding呢？
