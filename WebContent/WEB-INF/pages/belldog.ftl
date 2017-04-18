@@ -7,5 +7,5 @@
 难道是因为在FreeMarkerConfigurer配置了templateLoaderPath路径的原因/>  -->
 
 <#macro PAGE_CONTENT>
-<div><p></p></div>
+<div><p>${static.haha}${x}</p></div>
 </#macro>

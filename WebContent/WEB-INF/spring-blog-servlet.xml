@@ -46,6 +46,11 @@
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="location" value="classpath:freemarker-enum.properties"/>
     </bean>
+    <!--建一个PropertiesFactoryBean的bean来管理freemarker-static.properties-->
+    <bean id="freemarkerStaticConfiguration"
+          class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="classpath:freemarker-static.properties"/>
+    </bean>
     <!--配置Freemarker,这里的FreeMarkerConfigurer继承了org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer，之所以要这样配是因为要加一些自定义的东西-->
     <bean id="freemarkerConfig" class="com.zjw.blog.ext.FreeMarkerConfigurer">
         <!-- 你的模版文件的存放路径，我这里存放在WEB-INF目录下文件夹里 -->
@@ -55,11 +60,17 @@
             <map>
                 <!--这是一个全局变量，虽然我也不知道他是什么东西-->
                 <entry key="xml_escape" value-ref="fmXmlEscape"/>
+                <!--这是根据property-placeholder的资源文件，配置一个全局变量,我们property-placeholder是配置在spring.xml文件中，并且spring.xml并没有导入
+                该spring-blog-servlet.xml,所以解析不了-->
+                <!--<entry key="y" value="${db.jdbcUrl}"></entry>-->
+                <!--这是写的一个全局变量-->
+                <entry key="x" value="一个全局变量"></entry>
             </map>
         </property>
         <property name="freemarkerSettings" ref="freemarkerConfiguration"/>
-        <!--这是一个自定义的属性-->
+        <!--这是两个个自定义的属性-->
         <property name="enumSettings" ref="freemarkerEnumConfiguration"/>
+        <property name="staticSettings" ref="freemarkerStaticConfiguration"/>
     </bean>
 
     <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>

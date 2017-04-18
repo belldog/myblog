@@ -7,18 +7,18 @@ import java.util.*;
 /**
  * Miscellaneous {@link String} utility methods.
  * <p>
- * Mainly for internal use within the framework; 
+ * Mainly for internal use within the framework;
  * <p>
  * This class delivers some simple functionality that should really be provided
  * by the core Java <code>String</code> and {@link StringBuffer} classes, such
  * as the ability to {@link #replace} all occurrences of a given substring in a
  * target string. It also provides easy-to-use methods to convert between
  * delimited strings, such as CSV strings, and collections and arrays.
- * 
  */
 public final class StringUtils {
-    
-    private StringUtils(){}
+
+    private StringUtils() {
+    }
 
     private static final String FOLDER_SEPARATOR = "/";
 
@@ -39,16 +39,15 @@ public final class StringUtils {
      * length 0. Note: Will return <code>true</code> for a CharSequence that
      * purely consists of whitespace.
      * <p>
-     * 
+     * <p>
      * <pre>
      * StringUtils.hasLength(null) = false
      * StringUtils.hasLength(&quot;&quot;) = false
      * StringUtils.hasLength(&quot; &quot;) = true
      * StringUtils.hasLength(&quot;Hello&quot;) = true
      * </pre>
-     * 
-     * @param str
-     *            the CharSequence to check (may be <code>null</code>)
+     *
+     * @param str the CharSequence to check (may be <code>null</code>)
      * @return <code>true</code> if the CharSequence is not null and has length
      * @see #hasText(String)
      */
@@ -60,9 +59,8 @@ public final class StringUtils {
      * Check that the given String is neither <code>null</code> nor of length 0.
      * Note: Will return <code>true</code> for a String that purely consists of
      * whitespace.
-     * 
-     * @param str
-     *            the String to check (may be <code>null</code>)
+     *
+     * @param str the String to check (may be <code>null</code>)
      * @return <code>true</code> if the String is not null and has length
      * @see #hasLength(CharSequence)
      */
@@ -75,7 +73,7 @@ public final class StringUtils {
      * returns <code>true</code> if the string not <code>null</code>, its length
      * is greater than 0, and it contains at least one non-whitespace character.
      * <p>
-     * 
+     * <p>
      * <pre>
      * StringUtils.hasText(null) = false
      * StringUtils.hasText(&quot;&quot;) = false
@@ -83,12 +81,11 @@ public final class StringUtils {
      * StringUtils.hasText(&quot;12345&quot;) = true
      * StringUtils.hasText(&quot; 12345 &quot;) = true
      * </pre>
-     * 
-     * @param str
-     *            the CharSequence to check (may be <code>null</code>)
+     *
+     * @param str the CharSequence to check (may be <code>null</code>)
      * @return <code>true</code> if the CharSequence is not <code>null</code>,
-     *         its length is greater than 0, and it does not contain whitespace
-     *         only
+     * its length is greater than 0, and it does not contain whitespace
+     * only
      * @see Character#isWhitespace
      */
     public static boolean hasText(CharSequence str) {
@@ -109,10 +106,9 @@ public final class StringUtils {
      * returns <code>true</code> if the string not <code>null</code>, its length
      * is greater than 0, and it contains at least one non-whitespace character.
      *
-     * @param str
-     *            the String to check (may be <code>null</code>)
+     * @param str the String to check (may be <code>null</code>)
      * @return <code>true</code> if the String is not <code>null</code>, its
-     *         length is greater than 0, and it does not contain whitespace only
+     * length is greater than 0, and it does not contain whitespace only
      * @see #hasText(CharSequence)
      */
     public static boolean hasText(String str) {
@@ -122,10 +118,9 @@ public final class StringUtils {
     /**
      * Check whether the given CharSequence contains any whitespace characters.
      *
-     * @param str
-     *            the CharSequence to check (may be <code>null</code>)
+     * @param str the CharSequence to check (may be <code>null</code>)
      * @return <code>true</code> if the CharSequence is not empty and contains
-     *         at least 1 whitespace character
+     * at least 1 whitespace character
      * @see Character#isWhitespace
      */
     public static boolean containsWhitespace(CharSequence str) {
@@ -144,10 +139,9 @@ public final class StringUtils {
     /**
      * Check whether the given String contains any whitespace characters.
      *
-     * @param str
-     *            the String to check (may be <code>null</code>)
+     * @param str the String to check (may be <code>null</code>)
      * @return <code>true</code> if the String is not empty and contains at
-     *         least 1 whitespace character
+     * least 1 whitespace character
      * @see #containsWhitespace(CharSequence)
      */
     public static boolean containsWhitespace(String str) {
@@ -155,10 +149,9 @@ public final class StringUtils {
     }
 
     /**
-     * Trim leading and trailing whitespace from the given String.
+     * 去除字符串前后的空白字符，返回一个新的字符串
      *
-     * @param str
-     *            the String to check
+     * @param str the String to check
      * @return the trimmed String
      * @see Character#isWhitespace
      */
@@ -177,11 +170,9 @@ public final class StringUtils {
     }
 
     /**
-     * Trim <i>all</i> whitespace from the given String: leading, trailing, and
-     * inbetween characters.
+     * 去除字符串中所有的空白的字符，返回一个新的字符串
      *
-     * @param str
-     *            the String to check
+     * @param str the String to check
      * @return the trimmed String
      * @see Character#isWhitespace
      */
@@ -202,10 +193,9 @@ public final class StringUtils {
     }
 
     /**
-     * Trim leading whitespace from the given String.
+     * 去除字符串开头的空白字符，返回一个新的字符串
      *
-     * @param str
-     *            the String to check
+     * @param str the String to check
      * @return the trimmed String
      * @see Character#isWhitespace
      */
@@ -221,10 +211,9 @@ public final class StringUtils {
     }
 
     /**
-     * Trim trailing whitespace from the given String.
+     * 去除字符串后面的空白字符，返回一个新的字符串
      *
-     * @param str
-     *            the String to check
+     * @param str the String to check
      * @return the trimmed String
      * @see Character#isWhitespace
      */
@@ -240,13 +229,11 @@ public final class StringUtils {
     }
 
     /**
-     * Trim all occurences of the supplied leading character from the given
-     * String.
+     * 去除字符串开头是以leadingCharacter字符开头的leadingCharacter字符，得到一个新的字符串，StringUtils.trimLeadingCharacter(" A",'A')为" A",
+     * StringUtils.trimLeadingCharacter("A",'A')为"".
      *
-     * @param str
-     *            the String to check
-     * @param leadingCharacter
-     *            the leading character to be trimmed
+     * @param str              the String to check
+     * @param leadingCharacter the leading character to be trimmed
      * @return the trimmed String
      */
     public static String trimLeadingCharacter(String str, char leadingCharacter) {
@@ -261,13 +248,10 @@ public final class StringUtils {
     }
 
     /**
-     * Trim all occurences of the supplied trailing character from the given
-     * String.
+     * 去除字符串结尾是以trailingCharacter字符结尾的trailingCharacter字符，得到一个新的字符串
      *
-     * @param str
-     *            the String to check
-     * @param trailingCharacter
-     *            the trailing character to be trimmed
+     * @param str               the String to check
+     * @param trailingCharacter the trailing character to be trimmed
      * @return the trimmed String
      */
     public static String trimTrailingCharacter(String str, char trailingCharacter) {
@@ -282,13 +266,10 @@ public final class StringUtils {
     }
 
     /**
-     * Test if the given String starts with the specified prefix, ignoring
-     * upper/lower case.
+     * 判断字符串str是否是以字符串prefix开头，忽略大小写
      *
-     * @param str
-     *            the String to check
-     * @param prefix
-     *            the prefix to look for
+     * @param str    the String to check
+     * @param prefix the prefix to look for
      * @see String#startsWith
      */
     public static boolean startsWithIgnoreCase(String str, String prefix) {
@@ -307,13 +288,10 @@ public final class StringUtils {
     }
 
     /**
-     * Test if the given String ends with the specified suffix, ignoring
-     * upper/lower case.
+     * 判断字符串str是否是以字符串prefix结尾，忽略大小写
      *
-     * @param str
-     *            the String to check
-     * @param suffix
-     *            the suffix to look for
+     * @param str    the String to check
+     * @param suffix the suffix to look for
      * @see String#endsWith
      */
     public static boolean endsWithIgnoreCase(String str, String suffix) {
@@ -333,15 +311,11 @@ public final class StringUtils {
     }
 
     /**
-     * Test whether the given string matches the given substring at the given
-     * index.
+     * 字符串str从索引index开始匹配substring,只有全部匹配匹配才返回true
      *
-     * @param str
-     *            the original string (or StringBuffer)
-     * @param index
-     *            the index in the original string to start matching against
-     * @param substring
-     *            the substring to match at the given index
+     * @param str       the original string (or StringBuffer)
+     * @param index     the index in the original string to start matching against
+     * @param substring the substring to match at the given index
      */
     public static boolean substringMatch(CharSequence str, int index, CharSequence substring) {
         for (int j = 0; j < substring.length(); j++) {
@@ -354,12 +328,10 @@ public final class StringUtils {
     }
 
     /**
-     * Count the occurrences of the substring in string s.
+     * 统计字符串str中包含了几个字符串sub.
      *
-     * @param str
-     *            string to search in. Return 0 if this is null.
-     * @param sub
-     *            string to search for. Return 0 if this is null.
+     * @param str string to search in. Return 0 if this is null.
+     * @param sub string to search for. Return 0 if this is null.
      */
     public static int countOccurrencesOf(String str, String sub) {
         if (str == null || sub == null || str.length() == 0 || sub.length() == 0) {
@@ -374,15 +346,11 @@ public final class StringUtils {
     }
 
     /**
-     * Replace all occurences of a substring within a string with another
-     * string.
+     * 把字符串inString中所有的子字符串oldPattern替换成newPattern，返回一个新的字符串
      *
-     * @param inString
-     *            String to examine
-     * @param oldPattern
-     *            String to replace
-     * @param newPattern
-     *            String to insert
+     * @param inString   String to examine
+     * @param oldPattern String to replace
+     * @param newPattern String to insert
      * @return a String with the replacements
      */
     public static String replace(String inString, String oldPattern, String newPattern) {
@@ -412,12 +380,10 @@ public final class StringUtils {
     }
 
     /**
-     * Delete all occurrences of the given substring.
+     * 去除inString字符串中的所有子字符串pattern,返回一个新的字符串
      *
-     * @param inString
-     *            the original String
-     * @param pattern
-     *            the pattern to delete all occurrences of
+     * @param inString the original String
+     * @param pattern  the pattern to delete all occurrences of
      * @return the resulting String
      */
     public static String delete(String inString, String pattern) {
@@ -425,13 +391,11 @@ public final class StringUtils {
     }
 
     /**
-     * Delete any character in a given String.
+     * 去除字符串inString中所有字符串charsToDelete中有的字符，例如deleteAny("abcd","ac"),得到新字符串"bd"
      *
-     * @param inString
-     *            the original String
-     * @param charsToDelete
-     *            a set of characters to delete. E.g. "az\n" will delete 'a's,
-     *            'z's and new lines.
+     * @param inString      the original String
+     * @param charsToDelete a set of characters to delete. E.g. "az\n" will delete 'a's,
+     *                      'z's and new lines.
      * @return the resulting String
      */
     public static String deleteAny(String inString, String charsToDelete) {
@@ -453,60 +417,59 @@ public final class StringUtils {
     // ---------------------------------------------------------------------
 
     /**
-     * Quote the given String with single quotes.
+     * 给字符串加单引号，并返回这个新字符串，例如quote("abcd")得到字符串"'abcd'"
      *
-     * @param str
-     *            the input String (e.g. "myString")
+     * @param str the input String (e.g. "myString")
      * @return the quoted String (e.g. "'myString'"), or
-     *         <code>null<code> if the input was <code>null</code>
+     * <code>null<code> if the input was <code>null</code>
      */
     public static String quote(String str) {
         return (str != null ? "'" + str + "'" : null);
     }
 
     /**
-     * Turn the given Object into a String with single quotes if it is a String;
-     * keeping the Object as-is else.
+     * 如果对象是个字符串，给他加上单引号，并返回这个新字符串，否则返回这个对象
      *
-     * @param obj
-     *            the input Object (e.g. "myString")
+     * @param obj the input Object (e.g. "myString")
      * @return the quoted String (e.g. "'myString'"), or the input object as-is
-     *         if not a String
+     * if not a String
      */
     public static Object quoteIfString(Object obj) {
         return (obj instanceof String ? quote((String) obj) : obj);
     }
 
     /**
+     * 从字符串qualifiedName的最后开始查找字符'.'，并截取这个字符之后的字符组成新的字符串返回，例如unquelify("this.name.is.qualified")
+     * 返回"qualified"
      * Unqualify a string qualified by a '.' dot character. For example,
      * "this.name.is.qualified", returns "qualified".
      *
-     * @param qualifiedName
-     *            the qualified name
+     * @param qualifiedName the qualified name
      */
     public static String unqualify(String qualifiedName) {
         return unqualify(qualifiedName, '.');
     }
 
     /**
+     * 从字符串qualifiedName的最后开始查找字符separator，并截取这个字符之后的字符组成新的字符串返回，例如unquelify("this:name:is:qualified",':')
+     * 返回"qualified"
+     *
      * Unqualify a string qualified by a separator character. For example,
      * "this:name:is:qualified" returns "qualified" if using a ':' separator.
      *
-     * @param qualifiedName
-     *            the qualified name
-     * @param separator
-     *            the separator
+     * @param qualifiedName the qualified name
+     * @param separator     the separator
      */
     public static String unqualify(String qualifiedName, char separator) {
         return qualifiedName.substring(qualifiedName.lastIndexOf(separator) + 1);
     }
 
     /**
+     * 把字符串的首字符换成大写，返回这个新的字符串
      * Capitalize a <code>String</code>, changing the first letter to upper case
      * as per {@link Character#toUpperCase(char)}. No other letters are changed.
      *
-     * @param str
-     *            the String to capitalize, may be <code>null</code>
+     * @param str the String to capitalize, may be <code>null</code>
      * @return the capitalized String, <code>null</code> if null
      */
     public static String capitalize(String str) {
@@ -514,18 +477,24 @@ public final class StringUtils {
     }
 
     /**
+     * 把字符串的首字符换成小写，返回这个新的字符串
      * Uncapitalize a <code>String</code>, changing the first letter to lower
      * case as per {@link Character#toLowerCase(char)}. No other letters are
      * changed.
      *
-     * @param str
-     *            the String to uncapitalize, may be <code>null</code>
+     * @param str the String to uncapitalize, may be <code>null</code>
      * @return the uncapitalized String, <code>null</code> if null
      */
     public static String uncapitalize(String str) {
         return changeFirstCharacterCase(str, false);
     }
 
+    /**
+     * true,把字符串str的第一个字符换成大写，false,把字符串的第一个字符换成小写。返回这个新的字符串
+     * @param str
+     * @param capitalize
+     * @return
+     */
     private static String changeFirstCharacterCase(String str, boolean capitalize) {
         if (str == null || str.length() == 0) {
             return str;
@@ -541,11 +510,13 @@ public final class StringUtils {
     }
 
     /**
+     * 从字符串path的最后开始查找字符'/'，并截取这个字符之后的字符组成新的字符串返回，例如getFilename("mypath/myfile.txt")
+     * 返回"myfile.txt",就是得到文件名
+     *
      * Extract the filename from the given path, e.g. "mypath/myfile.txt" ->
      * "myfile.txt".
      *
-     * @param path
-     *            the file path (may be <code>null</code>)
+     * @param path the file path (may be <code>null</code>)
      * @return the extracted filename, or <code>null</code> if none
      */
     public static String getFilename(String path) {
@@ -557,11 +528,12 @@ public final class StringUtils {
     }
 
     /**
+     * 从字符串path的最后开始查找字符'.'，并截取这个字符之后的字符组成新的字符串返回，例如getFilename("mypath/myfile.txt")
+     * 返回"txt",就是得到文件的后缀名
      * Extract the filename extension from the given path, e.g.
      * "mypath/myfile.txt" -> "txt".
      *
-     * @param path
-     *            the file path (may be <code>null</code>)
+     * @param path the file path (may be <code>null</code>)
      * @return the extracted filename extension, or <code>null</code> if none
      */
     public static String getFilenameExtension(String path) {
@@ -573,13 +545,14 @@ public final class StringUtils {
     }
 
     /**
+     * 从字符串path的最后开始查找字符'.'，并去除这个字符之后的字符组成新的字符串返回，例如stripFilenameExtension("mypath/myfile.txt")
+     * 返回"mypath/myfile"
      * Strip the filename extension from the given path, e.g.
      * "mypath/myfile.txt" -> "mypath/myfile".
      *
-     * @param path
-     *            the file path (may be <code>null</code>)
+     * @param path the file path (may be <code>null</code>)
      * @return the path with stripped filename extension, or <code>null</code>
-     *         if none
+     * if none
      */
     public static String stripFilenameExtension(String path) {
         if (path == null) {
@@ -590,14 +563,16 @@ public final class StringUtils {
     }
 
     /**
+     * 例如applyRelativePath("aa/bb/cc","dd"),得到"aa/bb/dd"
+     * applyRelativePath("aa/bb/cc","/dd"),得到"aa/bb/dd"
+     * applyRelativePath("cc","/dd"),得到"/dd"
+     * applyRelativePath("cc","dd"),得到"dd"
      * Apply the given relative path to the given path, assuming standard Java
      * folder separation (i.e. "/" separators);
      *
-     * @param path
-     *            the path to start from (usually a full file path)
-     * @param relativePath
-     *            the relative path to apply (relative to the full file path
-     *            above)
+     * @param path         the path to start from (usually a full file path)
+     * @param relativePath the relative path to apply (relative to the full file path
+     *                     above)
      * @return the full file path that results from applying the relative path
      */
     public static String applyRelativePath(String path, String relativePath) {
@@ -614,17 +589,18 @@ public final class StringUtils {
     }
 
     /**
+     * 貌似是例如cleanPath("192.168.0.62:8080/haha/../.././../login.shtml")得到"192.168.0.62:../8080/haha/login.shtml"
      * Normalize the path by suppressing sequences like "path/.." and inner
      * simple dots.
      * <p>
      * The result is convenient for path comparison. For other uses, notice that
      * Windows separators ("\") are replaced by simple slashes.
      *
-     * @param path
-     *            the original path
+     * @param path the original path
      * @return the normalized path
      */
     public static String cleanPath(String path) {
+        //把字符串中所有的"\\"换成"/"
         String pathToUse = replace(path, WINDOWS_FOLDER_SEPARATOR, FOLDER_SEPARATOR);
 
         // Strip prefix from path to analyze, to not treat it as part of the
@@ -633,11 +609,15 @@ public final class StringUtils {
         // strip the first "core" directory while keeping the "file:" prefix.
         int prefixIndex = pathToUse.indexOf(":");
         String prefix = "";
+        //用出现的第一个":"把字符串pathToUse拆成两个字符串
         if (prefixIndex != -1) {
+            //:之前的字符串
             prefix = pathToUse.substring(0, prefixIndex + 1);
+            //:之后的字符串
             pathToUse = pathToUse.substring(prefixIndex + 1);
         }
 
+        //把:之后的字符串根据/拆成一个String数组
         String[] pathArray = delimitedListToStringArray(pathToUse, FOLDER_SEPARATOR);
         List<String> pathElements = new LinkedList<String>();
         int tops = 0;
@@ -670,10 +650,8 @@ public final class StringUtils {
     /**
      * Compare two paths after normalization of them.
      *
-     * @param path1
-     *            first path for comparison
-     * @param path2
-     *            second path for comparison
+     * @param path1 first path for comparison
+     * @param path2 second path for comparison
      * @return whether the two paths are equivalent after normalization
      */
     public static boolean pathEquals(String path1, String path2) {
@@ -686,10 +664,9 @@ public final class StringUtils {
      * This is the inverse operation of {@link Locale#toString Locale's
      * toString}.
      *
-     * @param localeString
-     *            the locale string, following <code>Locale's</code>
-     *            <code>toString()</code> format ("en", "en_UK", etc); also
-     *            accepts spaces as separators, as an alternative to underscores
+     * @param localeString the locale string, following <code>Locale's</code>
+     *                     <code>toString()</code> format ("en", "en_UK", etc); also
+     *                     accepts spaces as separators, as an alternative to underscores
      * @return a corresponding <code>Locale</code> instance
      */
     public static Locale parseLocaleString(String localeString) {
@@ -720,15 +697,13 @@ public final class StringUtils {
      * Append the given String to the given String array, returning a new array
      * consisting of the input array contents plus the given String.
      *
-     * @param array
-     *            the array to append to (can be <code>null</code>)
-     * @param str
-     *            the String to append
+     * @param array the array to append to (can be <code>null</code>)
+     * @param str   the String to append
      * @return the new array (never <code>null</code>)
      */
     public static String[] addStringToArray(String[] array, String str) {
         if (array == null || array.length == 0) {
-            return new String[] { str };
+            return new String[]{str};
         }
         String[] newArr = new String[array.length + 1];
         System.arraycopy(array, 0, newArr, 0, array.length);
@@ -742,12 +717,10 @@ public final class StringUtils {
      * <p>
      * The order of elements in the original arrays is preserved.
      *
-     * @param array1
-     *            the first array (can be <code>null</code>)
-     * @param array2
-     *            the second array (can be <code>null</code>)
+     * @param array1 the first array (can be <code>null</code>)
+     * @param array2 the second array (can be <code>null</code>)
      * @return the new array (<code>null</code> if both given arrays were
-     *         <code>null</code>)
+     * <code>null</code>)
      */
     public static String[] concatenateStringArrays(String[] array1, String[] array2) {
         if (array1 == null || array1.length == 0) {
@@ -761,15 +734,16 @@ public final class StringUtils {
         System.arraycopy(array2, 0, newArr, array1.length, array2.length);
         return newArr;
     }
- // ContainsNone
+    // ContainsNone
     //-----------------------------------------------------------------------
+
     /**
      * <p>Checks that the CharSequence does not contain certain characters.</p>
-     *
+     * <p>
      * <p>A {@code null} CharSequence will return {@code true}.
      * A {@code null} invalid character array will return {@code true}.
      * An empty CharSequence (length()=0) always returns true.</p>
-     *
+     * <p>
      * <pre>
      * StringUtils.containsNone(null, *)       = true
      * StringUtils.containsNone(*, null)       = true
@@ -780,10 +754,9 @@ public final class StringUtils {
      * StringUtils.containsNone("abz", 'xyz')  = false
      * </pre>
      *
-     * @param cs  the CharSequence to check, may be null
-     * @param searchChars  an array of invalid chars, may be null
+     * @param cs          the CharSequence to check, may be null
+     * @param searchChars an array of invalid chars, may be null
      * @return true if it contains none of the invalid chars, or is null
-     * @since 2.0
      * @since 3.0 Changed signature from containsNone(String, char[]) to containsNone(CharSequence, char...)
      */
     public static boolean containsNone(CharSequence cs, char... searchChars) {
@@ -818,11 +791,11 @@ public final class StringUtils {
 
     /**
      * <p>Checks that the CharSequence does not contain certain characters.</p>
-     *
+     * <p>
      * <p>A {@code null} CharSequence will return {@code true}.
      * A {@code null} invalid character array will return {@code true}.
      * An empty String ("") always returns true.</p>
-     *
+     * <p>
      * <pre>
      * StringUtils.containsNone(null, *)       = true
      * StringUtils.containsNone(*, null)       = true
@@ -833,10 +806,9 @@ public final class StringUtils {
      * StringUtils.containsNone("abz", "xyz")  = false
      * </pre>
      *
-     * @param cs  the CharSequence to check, may be null
-     * @param invalidChars  a String of invalid chars, may be null
+     * @param cs           the CharSequence to check, may be null
+     * @param invalidChars a String of invalid chars, may be null
      * @return true if it contains none of the invalid chars, or is null
-     * @since 2.0
      * @since 3.0 Changed signature from containsNone(String, String) to containsNone(CharSequence, String)
      */
     public static boolean containsNone(CharSequence cs, String invalidChars) {
@@ -845,6 +817,7 @@ public final class StringUtils {
         }
         return containsNone(cs, invalidChars.toCharArray());
     }
+
     /**
      * Merge the given String arrays into one, with overlapping array elements
      * only included once.
@@ -853,18 +826,16 @@ public final class StringUtils {
      * exception of overlapping elements, which are only included on their first
      * occurence).
      *
-     * @param array1
-     *            the first array (can be <code>null</code>)
-     * @param array2
-     *            the second array (can be <code>null</code>)
+     * @param array1 the first array (can be <code>null</code>)
+     * @param array2 the second array (can be <code>null</code>)
      * @return the new array (<code>null</code> if both given arrays were
-     *         <code>null</code>)
+     * <code>null</code>)
      */
     public static String[] mergeStringArrays(String[] array1, String[] array2) {
-        if ( array1 == null || array1.length == 0) {
+        if (array1 == null || array1.length == 0) {
             return array2;
         }
-        if ( array2 == null || array2.length == 0) {
+        if (array2 == null || array2.length == 0) {
             return array1;
         }
         List<String> result = new ArrayList<String>();
@@ -881,12 +852,11 @@ public final class StringUtils {
     /**
      * Turn given source String array into sorted array.
      *
-     * @param array
-     *            the source array
+     * @param array the source array
      * @return the sorted array (never <code>null</code>)
      */
     public static String[] sortStringArray(String[] array) {
-        if ( array == null || array.length == 0) {
+        if (array == null || array.length == 0) {
             return new String[0];
         }
         Arrays.sort(array);
@@ -897,10 +867,9 @@ public final class StringUtils {
      * Copy the given Collection into a String array. The Collection must
      * contain String elements only.
      *
-     * @param collection
-     *            the Collection to copy
+     * @param collection the Collection to copy
      * @return the String array (<code>null</code> if the passed-in Collection
-     *         was <code>null</code>)
+     * was <code>null</code>)
      */
     public static String[] toStringArray(Collection<?> collection) {
         if (collection == null) {
@@ -913,10 +882,9 @@ public final class StringUtils {
      * Copy the given Enumeration into a String array. The Enumeration must
      * contain String elements only.
      *
-     * @param enumeration
-     *            the Enumeration to copy
+     * @param enumeration the Enumeration to copy
      * @return the String array (<code>null</code> if the passed-in Enumeration
-     *         was <code>null</code>)
+     * was <code>null</code>)
      */
     public static String[] toStringArray(Enumeration<?> enumeration) {
         if (enumeration == null) {
@@ -930,8 +898,7 @@ public final class StringUtils {
      * Trim the elements of the given String array, calling
      * <code>String.trim()</code> on each of them.
      *
-     * @param array
-     *            the original String array
+     * @param array the original String array
      * @return the resulting array (of the same size) with trimmed elements
      */
     public static String[] trimArrayElements(String[] array) {
@@ -950,8 +917,7 @@ public final class StringUtils {
      * Remove duplicate Strings from the given array. Also sorts the array, as
      * it uses a TreeSet.
      *
-     * @param array
-     *            the String array
+     * @param array the String array
      * @return an array without duplicates, in natural sort order
      */
     public static String[] removeDuplicateStrings(String[] array) {
@@ -969,14 +935,12 @@ public final class StringUtils {
      * Split a String at the first occurrence of the delimiter. Does not include
      * the delimiter in the result.
      *
-     * @param toSplit
-     *            the string to split
-     * @param delimiter
-     *            to split the string up with
+     * @param toSplit   the string to split
+     * @param delimiter to split the string up with
      * @return a two element array with index 0 being before the delimiter, and
-     *         index 1 being after the delimiter (neither element includes the
-     *         delimiter); or <code>null</code> if the delimiter wasn't found in
-     *         the given input String
+     * index 1 being after the delimiter (neither element includes the
+     * delimiter); or <code>null</code> if the delimiter wasn't found in
+     * the given input String
      */
     public static String[] split(String toSplit, String delimiter) {
         if (!hasLength(toSplit) || !hasLength(delimiter)) {
@@ -988,7 +952,7 @@ public final class StringUtils {
         }
         String beforeDelimiter = toSplit.substring(0, offset);
         String afterDelimiter = toSplit.substring(offset + delimiter.length());
-        return new String[] { beforeDelimiter, afterDelimiter };
+        return new String[]{beforeDelimiter, afterDelimiter};
     }
 
     /**
@@ -1000,13 +964,11 @@ public final class StringUtils {
      * Will trim both the key and value before adding them to the
      * <code>Properties</code> instance.
      *
-     * @param array
-     *            the array to process
-     * @param delimiter
-     *            to split each element using (typically the equals symbol)
+     * @param array     the array to process
+     * @param delimiter to split each element using (typically the equals symbol)
      * @return a <code>Properties</code> instance representing the array
-     *         contents, or <code>null</code> if the array to process was null
-     *         or empty
+     * contents, or <code>null</code> if the array to process was null
+     * or empty
      */
     public static Properties splitArrayElementsIntoProperties(String[] array, String delimiter) {
         return splitArrayElementsIntoProperties(array, delimiter, null);
@@ -1021,17 +983,14 @@ public final class StringUtils {
      * Will trim both the key and value before adding them to the
      * <code>Properties</code> instance.
      *
-     * @param array
-     *            the array to process
-     * @param delimiter
-     *            to split each element using (typically the equals symbol)
-     * @param charsToDelete
-     *            one or more characters to remove from each element prior to
-     *            attempting the split operation (typically the quotation mark
-     *            symbol), or <code>null</code> if no removal should occur
+     * @param array         the array to process
+     * @param delimiter     to split each element using (typically the equals symbol)
+     * @param charsToDelete one or more characters to remove from each element prior to
+     *                      attempting the split operation (typically the quotation mark
+     *                      symbol), or <code>null</code> if no removal should occur
      * @return a <code>Properties</code> instance representing the array
-     *         contents, or <code>null</code> if the array to process was
-     *         <code>null</code> or empty
+     * contents, or <code>null</code> if the array to process was
+     * <code>null</code> or empty
      */
     public static Properties splitArrayElementsIntoProperties(String[] array, String delimiter, String charsToDelete) {
 
@@ -1062,11 +1021,9 @@ public final class StringUtils {
      * tokens. A delimiter is always a single character; for multi-character
      * delimiters, consider using <code>delimitedListToStringArray</code>
      *
-     * @param str
-     *            the String to tokenize
-     * @param delimiters
-     *            the delimiter characters, assembled as String (each of those
-     *            characters is individually considered as delimiter).
+     * @param str        the String to tokenize
+     * @param delimiters the delimiter characters, assembled as String (each of those
+     *                   characters is individually considered as delimiter).
      * @return an array of the tokens
      * @see StringTokenizer
      * @see String#trim()
@@ -1084,25 +1041,21 @@ public final class StringUtils {
      * tokens. A delimiter is always a single character; for multi-character
      * delimiters, consider using <code>delimitedListToStringArray</code>
      *
-     * @param str
-     *            the String to tokenize
-     * @param delimiters
-     *            the delimiter characters, assembled as String (each of those
-     *            characters is individually considered as delimiter)
-     * @param trimTokens
-     *            trim the tokens via String's <code>trim</code>
-     * @param ignoreEmptyTokens
-     *            omit empty tokens from the result array (only applies to
-     *            tokens that are empty after trimming; StringTokenizer will not
-     *            consider subsequent delimiters as token in the first place).
+     * @param str               the String to tokenize
+     * @param delimiters        the delimiter characters, assembled as String (each of those
+     *                          characters is individually considered as delimiter)
+     * @param trimTokens        trim the tokens via String's <code>trim</code>
+     * @param ignoreEmptyTokens omit empty tokens from the result array (only applies to
+     *                          tokens that are empty after trimming; StringTokenizer will not
+     *                          consider subsequent delimiters as token in the first place).
      * @return an array of the tokens (<code>null</code> if the input String was
-     *         <code>null</code>)
+     * <code>null</code>)
      * @see StringTokenizer
      * @see String#trim()
      * @see #delimitedListToStringArray
      */
     public static String[] tokenizeToStringArray(String str, String delimiters, boolean trimTokens,
-            boolean ignoreEmptyTokens) {
+                                                 boolean ignoreEmptyTokens) {
 
         if (str == null) {
             return null;
@@ -1122,18 +1075,17 @@ public final class StringUtils {
     }
 
     /**
+     * 字符串str根据子字符串delimiter拆分成String数组，并返回这个数组
      * Take a String which is a delimited list and convert it to a String array.
      * <p>
      * A single delimiter can consists of more than one character: It will still
      * be considered as single delimiter string, rather than as bunch of
      * potential delimiter characters - in contrast to
      * <code>tokenizeToStringArray</code>.
-     * 
-     * @param str
-     *            the input String
-     * @param delimiter
-     *            the delimiter between elements (this is a single delimiter,
-     *            rather than a bunch individual delimiter characters)
+     *
+     * @param str       the input String
+     * @param delimiter the delimiter between elements (this is a single delimiter,
+     *                  rather than a bunch individual delimiter characters)
      * @return an array of the tokens in the list
      * @see #tokenizeToStringArray
      */
@@ -1142,22 +1094,21 @@ public final class StringUtils {
     }
 
     /**
+     * 字符串str根据子字符串delimiter拆分成String数组,再去除数组里每个元素里所有charsToDelete字符串里有的字符，返回这个
+     * 字符数组
      * Take a String which is a delimited list and convert it to a String array.
      * <p>
      * A single delimiter can consists of more than one character: It will still
      * be considered as single delimiter string, rather than as bunch of
      * potential delimiter characters - in contrast to
      * <code>tokenizeToStringArray</code>.
-     * 
-     * @param str
-     *            the input String
-     * @param delimiter
-     *            the delimiter between elements (this is a single delimiter,
-     *            rather than a bunch individual delimiter characters)
-     * @param charsToDelete
-     *            a set of characters to delete. Useful for deleting unwanted
-     *            line breaks: e.g. "\r\n\f" will delete all new lines and line
-     *            feeds in a String.
+     *
+     * @param str           the input String
+     * @param delimiter     the delimiter between elements (this is a single delimiter,
+     *                      rather than a bunch individual delimiter characters)
+     * @param charsToDelete a set of characters to delete. Useful for deleting unwanted
+     *                      line breaks: e.g. "\r\n\f" will delete all new lines and line
+     *                      feeds in a String.
      * @return an array of the tokens in the list
      * @see #tokenizeToStringArray
      */
@@ -1166,7 +1117,7 @@ public final class StringUtils {
             return new String[0];
         }
         if (delimiter == null) {
-            return new String[] { str };
+            return new String[]{str};
         }
         List<String> result = new ArrayList<String>();
         if ("".equals(delimiter)) {
@@ -1190,9 +1141,8 @@ public final class StringUtils {
 
     /**
      * Convert a CSV list into an array of Strings.
-     * 
-     * @param str
-     *            the input String
+     *
+     * @param str the input String
      * @return an array of Strings, or the empty array in case of empty input
      */
     public static String[] commaDelimitedListToStringArray(String str) {
@@ -1202,9 +1152,8 @@ public final class StringUtils {
     /**
      * Convenience method to convert a CSV string list to a set. Note that this
      * will suppress duplicates.
-     * 
-     * @param str
-     *            the input String
+     *
+     * @param str the input String
      * @return a Set of String entries in the list
      */
     public static Set<String> commaDelimitedListToSet(String str) {
@@ -1217,17 +1166,14 @@ public final class StringUtils {
     }
 
     /**
+     * 集合coll里每个元素都要加上前缀prefix和后缀suffix,如果不是最后一个元素还要加上字符串delim,最后把这个字符串全部连起来返回一个新的字符串
      * Convenience method to return a Collection as a delimited (e.g. CSV)
      * String. E.g. useful for <code>toString()</code> implementations.
-     * 
-     * @param coll
-     *            the Collection to display
-     * @param delim
-     *            the delimiter to use (probably a ",")
-     * @param prefix
-     *            the String to start each element with
-     * @param suffix
-     *            the String to end each element with
+     *
+     * @param coll   the Collection to display
+     * @param delim  the delimiter to use (probably a ",")
+     * @param prefix the String to start each element with
+     * @param suffix the String to end each element with
      * @return the delimited String
      */
     public static String collectionToDelimitedString(Collection<?> coll, String delim, String prefix, String suffix) {
@@ -1246,28 +1192,28 @@ public final class StringUtils {
     }
 
     /**
+     * 集合coll里每个元素如果不是最后一个元素都要加上字符串delim,最后把他们连起来返回一个新的字符串
      * Convenience method to return a Collection as a delimited (e.g. CSV)
      * String. E.g. useful for <code>toString()</code> implementations.
-     * 
-     * @param coll
-     *            the Collection to display
-     * @param delim
-     *            the delimiter to use (probably a ",")
+     *
+     * @param coll  the Collection to display
+     * @param delim the delimiter to use (probably a ",")
      * @return the delimited String
      */
     public static String collectionToDelimitedString(Collection<?> coll, String delim) {
         return collectionToDelimitedString(coll, delim, "", "");
     }
-    
+
     // ContainsAny
     //-----------------------------------------------------------------------
+
     /**
      * <p>Checks if the CharSequence contains any character in the given
      * set of characters.</p>
-     *
+     * <p>
      * <p>A {@code null} CharSequence will return {@code false}.
      * A {@code null} or zero length search array will return {@code false}.</p>
-     *
+     * <p>
      * <pre>
      * StringUtils.containsAny(null, *)                = false
      * StringUtils.containsAny("", *)                  = false
@@ -1278,11 +1224,10 @@ public final class StringUtils {
      * StringUtils.containsAny("aba", ['z'])           = false
      * </pre>
      *
-     * @param cs  the CharSequence to check, may be null
-     * @param searchChars  the chars to search for, may be null
+     * @param cs          the CharSequence to check, may be null
+     * @param searchChars the chars to search for, may be null
      * @return the {@code true} if any of the chars are found,
      * {@code false} if no match or null input
-     * @since 2.4
      * @since 3.0 Changed signature from containsAny(String, char[]) to containsAny(CharSequence, char...)
      */
     public static boolean containsAny(CharSequence cs, char... searchChars) {
@@ -1319,12 +1264,12 @@ public final class StringUtils {
      * <p>
      * Checks if the CharSequence contains any character in the given set of characters.
      * </p>
-     *
+     * <p>
      * <p>
      * A {@code null} CharSequence will return {@code false}. A {@code null} search CharSequence will return
      * {@code false}.
      * </p>
-     *
+     * <p>
      * <pre>
      * StringUtils.containsAny(null, *)            = false
      * StringUtils.containsAny("", *)              = false
@@ -1335,12 +1280,9 @@ public final class StringUtils {
      * StringUtils.containsAny("aba","z")          = false
      * </pre>
      *
-     * @param cs
-     *            the CharSequence to check, may be null
-     * @param searchChars
-     *            the chars to search for, may be null
+     * @param cs          the CharSequence to check, may be null
+     * @param searchChars the chars to search for, may be null
      * @return the {@code true} if any of the chars are found, {@code false} if no match or null input
-     * @since 2.4
      * @since 3.0 Changed signature from containsAny(String, String) to containsAny(CharSequence, CharSequence)
      */
     public static boolean containsAny(CharSequence cs, CharSequence searchChars) {
@@ -1353,9 +1295,8 @@ public final class StringUtils {
     /**
      * Convenience method to return a Collection as a CSV String. E.g. useful
      * for <code>toString()</code> implementations.
-     * 
-     * @param coll
-     *            the Collection to display
+     *
+     * @param coll the Collection to display
      * @return the delimited String
      */
     public static String collectionToCommaDelimitedString(Collection<?> coll) {
@@ -1365,11 +1306,9 @@ public final class StringUtils {
     /**
      * Convenience method to return a String array as a delimited (e.g. CSV)
      * String. E.g. useful for <code>toString()</code> implementations.
-     * 
-     * @param arr
-     *            the array to display
-     * @param delim
-     *            the delimiter to use (probably a ",")
+     *
+     * @param arr   the array to display
+     * @param delim the delimiter to use (probably a ",")
      * @return the delimited String
      */
     public static String arrayToDelimitedString(Object[] arr, String delim) {
@@ -1389,9 +1328,8 @@ public final class StringUtils {
     /**
      * Convenience method to return a String array as a CSV String. E.g. useful
      * for <code>toString()</code> implementations.
-     * 
-     * @param arr
-     *            the array to display
+     *
+     * @param arr the array to display
      * @return the delimited String
      */
     public static String arrayToCommaDelimitedString(Object[] arr) {
@@ -1400,9 +1338,8 @@ public final class StringUtils {
 
     /**
      * Converts a String object to Integer value.
-     * 
-     * @param str
-     *            The String to be converted.
+     *
+     * @param str The String to be converted.
      * @return Value of Integer.
      */
     public static int parseInteger(String str) {
@@ -1411,9 +1348,8 @@ public final class StringUtils {
 
     /**
      * Parse a string object to integer
-     * 
-     * @param str
-     *            The String to be converted.
+     *
+     * @param str The String to be converted.
      * @return Value of Integer.
      */
     public static int parseInteger(String str, int param) {
@@ -1505,8 +1441,8 @@ public final class StringUtils {
     public static boolean parseBoolean(String str) {
         return parseBoolean(str, false);
     }
-    
-    public static double parseDouble(String str,double defaultValue){
+
+    public static double parseDouble(String str, double defaultValue) {
         double i = defaultValue;
         try {
             i = Double.parseDouble(str);
@@ -1515,12 +1451,12 @@ public final class StringUtils {
         }
         return i;
     }
-    
-    public static double parseDouble(String str){
+
+    public static double parseDouble(String str) {
         return parseDouble(str, 0);
     }
-    
-    public static BigDecimal parseBigDecimal(String str,BigDecimal defaultValue){
+
+    public static BigDecimal parseBigDecimal(String str, BigDecimal defaultValue) {
         BigDecimal i = defaultValue;
         try {
             i = new BigDecimal(str);
@@ -1530,16 +1466,16 @@ public final class StringUtils {
         return i;
     }
 
-    public static BigDecimal parseBigDecimal(String str){
+    public static BigDecimal parseBigDecimal(String str) {
         return parseBigDecimal(str, BigDecimal.ZERO);
     }
-    
+
     public static String getNo() {
-		String str = "";
-		str += (int) (Math.random() * 9 + 1);
-		for (int i = 0; i < 5; i++) {
-			str += (int) (Math.random() * 10);
-		}
-		return str;
-	}
+        String str = "";
+        str += (int) (Math.random() * 9 + 1);
+        for (int i = 0; i < 5; i++) {
+            str += (int) (Math.random() * 10);
+        }
+        return str;
+    }
 }

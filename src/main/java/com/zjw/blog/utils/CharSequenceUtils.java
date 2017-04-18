@@ -39,13 +39,9 @@ public class CharSequenceUtils {
 
     //-----------------------------------------------------------------------
     /**
-     * <p>Returns a new {@code CharSequence} that is a subsequence of this
-     * sequence starting with the {@code char} value at the specified index.</p>
      *
-     * <p>This provides the {@code CharSequence} equivalent to {@link String#substring(int)}.
-     * The length (in {@code char}) of the returned sequence is {@code length() - start},
-     * so if {@code start == end} then an empty sequence is returned.</p>
-     *
+     * <p>CharSequence是一个接口，其中如String，StringBuffer等类实现了该接口</p>
+     * <p>该方法截取从start开始到末尾的CharSequence</p>
      * @param cs  the specified subsequence, null returns null
      * @param start  the start index, inclusive, valid
      * @return a new subsequence, may be null
@@ -58,8 +54,7 @@ public class CharSequenceUtils {
 
     //-----------------------------------------------------------------------
     /**
-     * <p>Finds the first index in the {@code CharSequence} that matches the
-     * specified character.</p>
+     * <p>从指定的索引start开始搜索，返回在此字符串中第一次出现指定字符searchChar处的索引.找不到返回-1</p>
      *
      * @param cs  the {@code CharSequence} to be processed, not null
      * @param searchChar  the char to be searched for
@@ -84,7 +79,7 @@ public class CharSequenceUtils {
     }
 
     /**
-     * Used by the indexOf(CharSequence methods) as a green implementation of indexOf.
+     * 从指定的索引处start开始，返回第一次出现的指定子CharSequence在此CharSequence中的索引
      *
      * @param cs the {@code CharSequence} to be processed
      * @param searchChar the {@code CharSequence} to be searched for
@@ -93,20 +88,11 @@ public class CharSequenceUtils {
      */
     static int indexOf(CharSequence cs, CharSequence searchChar, int start) {
         return cs.toString().indexOf(searchChar.toString(), start);
-//        if (cs instanceof String && searchChar instanceof String) {
-//            // TODO: Do we assume searchChar is usually relatively small;
-//            //       If so then calling toString() on it is better than reverting to
-//            //       the green implementation in the else block
-//            return ((String) cs).indexOf((String) searchChar, start);
-//        } else {
-//            // TODO: Implement rather than convert to String
-//            return cs.toString().indexOf(searchChar.toString(), start);
-//        }
     }
 
     /**
-     * <p>Finds the last index in the {@code CharSequence} that matches the
-     * specified character.</p>
+     * <p>指定 Unicode 字符searchChar在此实例中的最后一个匹配项的索引位置。
+     * 该搜索从指定字符位置start开始。</p>
      *
      * @param cs  the {@code CharSequence} to be processed
      * @param searchChar  the char to be searched for
@@ -134,7 +120,8 @@ public class CharSequenceUtils {
     }
 
     /**
-     * Used by the lastIndexOf(CharSequence methods) as a green implementation of lastIndexOf
+     * 指定 子CharSequence searchChar在此实例cs中的最后一个匹配项的索引位置。
+     * 该搜索从指定字符位置start开始。
      *
      * @param cs the {@code CharSequence} to be processed
      * @param searchChar the {@code CharSequence} to be searched for
@@ -143,19 +130,10 @@ public class CharSequenceUtils {
      */
     static int lastIndexOf(CharSequence cs, CharSequence searchChar, int start) {
         return cs.toString().lastIndexOf(searchChar.toString(), start);
-//        if (cs instanceof String && searchChar instanceof String) {
-//            // TODO: Do we assume searchChar is usually relatively small;
-//            //       If so then calling toString() on it is better than reverting to
-//            //       the green implementation in the else block
-//            return ((String) cs).lastIndexOf((String) searchChar, start);
-//        } else {
-//            // TODO: Implement rather than convert to String
-//            return cs.toString().lastIndexOf(searchChar.toString(), start);
-//        }
     }
 
     /**
-     * Green implementation of toCharArray.
+     * 把这个CharSequence转换成一个新的字符数组
      *
      * @param cs the {@code CharSequence} to be processed
      * @return the resulting char array
@@ -174,7 +152,7 @@ public class CharSequenceUtils {
     }
 
     /**
-     * Green implementation of regionMatches.
+     * 是否忽略大小写比较cs从索引为thisStart和substring从索引为start,一共比较length对字符
      *
      * @param cs the {@code CharSequence} to be processed
      * @param ignoreCase whether or not to be case insensitive
@@ -189,7 +167,6 @@ public class CharSequenceUtils {
         if (cs instanceof String && substring instanceof String) {
             return ((String) cs).regionMatches(ignoreCase, thisStart, (String) substring, start, length);
         } else {
-            // TODO: Implement rather than convert to String
             return cs.toString().regionMatches(ignoreCase, thisStart, substring.toString(), start, length);
         }
     }
