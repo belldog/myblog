@@ -453,7 +453,7 @@ public final class StringUtils {
     /**
      * 从字符串qualifiedName的最后开始查找字符separator，并截取这个字符之后的字符组成新的字符串返回，例如unquelify("this:name:is:qualified",':')
      * 返回"qualified"
-     *
+     * <p>
      * Unqualify a string qualified by a separator character. For example,
      * "this:name:is:qualified" returns "qualified" if using a ':' separator.
      *
@@ -491,6 +491,7 @@ public final class StringUtils {
 
     /**
      * true,把字符串str的第一个字符换成大写，false,把字符串的第一个字符换成小写。返回这个新的字符串
+     *
      * @param str
      * @param capitalize
      * @return
@@ -512,7 +513,7 @@ public final class StringUtils {
     /**
      * 从字符串path的最后开始查找字符'/'，并截取这个字符之后的字符组成新的字符串返回，例如getFilename("mypath/myfile.txt")
      * 返回"myfile.txt",就是得到文件名
-     *
+     * <p>
      * Extract the filename from the given path, e.g. "mypath/myfile.txt" ->
      * "myfile.txt".
      *
@@ -589,7 +590,9 @@ public final class StringUtils {
     }
 
     /**
-     * 貌似是例如cleanPath("192.168.0.62:8080/haha/../.././../login.shtml")得到"192.168.0.62:../8080/haha/login.shtml"
+     * 貌似是例如cleanPath("192.168.0.62:8080/haha/../login.shtml")得到"192.168.0.62:8080/login.shtml"
+     * cleanPath("192.168.0.62:8080/haha/.././login.shtml")得到192.168.0.62:8080/login.shtml
+     * cleanPath("192.168.0.62:8080/haha/.././../login.shtml")得到192.168.0.62:login.shtml
      * Normalize the path by suppressing sequences like "path/.." and inner
      * simple dots.
      * <p>
@@ -648,7 +651,7 @@ public final class StringUtils {
     }
 
     /**
-     * Compare two paths after normalization of them.
+     * cleanPath过后，比较两个路径是否一样
      *
      * @param path1 first path for comparison
      * @param path2 second path for comparison
@@ -659,6 +662,7 @@ public final class StringUtils {
     }
 
     /**
+     * 根据字符串localeString,把他解析成一个Locale并返回
      * Parse the given <code>localeString</code> into a {@link Locale}.
      * <p>
      * This is the inverse operation of {@link Locale#toString Locale's
@@ -694,6 +698,7 @@ public final class StringUtils {
     // ---------------------------------------------------------------------
 
     /**
+     * 把字符串数组array里的元素拿出来，与字符串str组成一个新的字符串数组，并返回
      * Append the given String to the given String array, returning a new array
      * consisting of the input array contents plus the given String.
      *
@@ -712,6 +717,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把两个字符串数组合并成一个新的字符串数组
      * Concatenate the given String arrays into one, with overlapping array
      * elements included twice.
      * <p>
@@ -738,6 +744,7 @@ public final class StringUtils {
     //-----------------------------------------------------------------------
 
     /**
+     * 检查cs是否不包含字符searchChars,不包含返回true,包含返回false
      * <p>Checks that the CharSequence does not contain certain characters.</p>
      * <p>
      * <p>A {@code null} CharSequence will return {@code true}.
@@ -790,6 +797,7 @@ public final class StringUtils {
     }
 
     /**
+     * 检查cs是否不包含字符串invalidChars里的字符,不包含返回true,包含返回false
      * <p>Checks that the CharSequence does not contain certain characters.</p>
      * <p>
      * <p>A {@code null} CharSequence will return {@code true}.
@@ -819,6 +827,7 @@ public final class StringUtils {
     }
 
     /**
+     * 看字符串数组array2哪些元素是字符串数组array1没有的，把这些没有的与字符串数组array1结合组成一个新的字符串数组
      * Merge the given String arrays into one, with overlapping array elements
      * only included once.
      * <p>
@@ -850,7 +859,7 @@ public final class StringUtils {
     }
 
     /**
-     * Turn given source String array into sorted array.
+     * 给字符串数组元素排序，返回数组
      *
      * @param array the source array
      * @return the sorted array (never <code>null</code>)
@@ -864,6 +873,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把集合collection转换成字符串数组，这个集合必须只包含String元素
      * Copy the given Collection into a String array. The Collection must
      * contain String elements only.
      *
@@ -879,6 +889,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把Enumeration转换成字符串数组，这个Enumeration必须只包含String元素
      * Copy the given Enumeration into a String array. The Enumeration must
      * contain String elements only.
      *
@@ -895,6 +906,7 @@ public final class StringUtils {
     }
 
     /**
+     * 对字符串数组array里的每个元素进行trim,再返回这个新的字符串数组
      * Trim the elements of the given String array, calling
      * <code>String.trim()</code> on each of them.
      *
@@ -914,6 +926,7 @@ public final class StringUtils {
     }
 
     /**
+     * 去除字符串数组array中重复的元素，并排序，返回一个新的字符串数组
      * Remove duplicate Strings from the given array. Also sorts the array, as
      * it uses a TreeSet.
      *
@@ -932,6 +945,7 @@ public final class StringUtils {
     }
 
     /**
+     * 字符串toSplit根据字符串delimiter，把它拆分成两个字符串，并把这两个字符串组成字符串数组返回
      * Split a String at the first occurrence of the delimiter. Does not include
      * the delimiter in the result.
      *
@@ -956,6 +970,8 @@ public final class StringUtils {
     }
 
     /**
+     * 把字符串数组array里的每个元素通过delimiter拆成两份或多份，每个
+     * 拆分出来的第一个元素和第二个元素，组成Properties的一对键值对，并返回这个Properties
      * Take an array Strings and split each element based on the given
      * delimiter. A <code>Properties</code> instance is then generated, with the
      * left of the delimiter providing the key, and the right of the delimiter
@@ -975,6 +991,8 @@ public final class StringUtils {
     }
 
     /**
+     * 先把字符串数组array里的每个元素删掉字符串charsToDelete有的字符，再把这些元素通过delimiter拆成两份或多份，每个
+     * 拆分出来的第一个元素和第二个元素，组成Properties的一对键值对，并返回这个Properties
      * Take an array Strings and split each element based on the given
      * delimiter. A <code>Properties</code> instance is then generated, with the
      * left of the delimiter providing the key, and the right of the delimiter
@@ -1013,6 +1031,8 @@ public final class StringUtils {
     }
 
     /**
+     * 把字符串str根据字符串delimiters里有的字符拆分，再对拆分过后的字符串trim,对空白字符串忽略
+     * 最后返回一个字符串数组
      * Tokenize the given String into a String array via a StringTokenizer.
      * Trims tokens and omits empty tokens.
      * <p>
@@ -1034,6 +1054,8 @@ public final class StringUtils {
     }
 
     /**
+     * 把字符串str根据字符串delimiters里有的字符拆分，再根据trimTokens的值是否对拆分过后的字符串trim,根据ignoreEmptyTokens的值是否对空白字符串忽略
+     * 最后返回一个字符串数组
      * Tokenize the given String into a String array via a StringTokenizer.
      * <p>
      * The given delimiters string is supposed to consist of any number of
@@ -1044,7 +1066,7 @@ public final class StringUtils {
      * @param str               the String to tokenize
      * @param delimiters        the delimiter characters, assembled as String (each of those
      *                          characters is individually considered as delimiter)
-     * @param trimTokens        trim the tokens via String's <code>trim</code>
+     * @param trimTokens        trim the tokens via String's <code>trim</code>     是否trim拆分的token
      * @param ignoreEmptyTokens omit empty tokens from the result array (only applies to
      *                          tokens that are empty after trimming; StringTokenizer will not
      *                          consider subsequent delimiters as token in the first place).
@@ -1060,6 +1082,7 @@ public final class StringUtils {
         if (str == null) {
             return null;
         }
+
         StringTokenizer st = new StringTokenizer(str, delimiters);
         List<String> tokens = new ArrayList<String>();
         while (st.hasMoreTokens()) {
@@ -1140,6 +1163,7 @@ public final class StringUtils {
     }
 
     /**
+     * 字符串str根据“，”拆分成字符串数组
      * Convert a CSV list into an array of Strings.
      *
      * @param str the input String
@@ -1150,6 +1174,7 @@ public final class StringUtils {
     }
 
     /**
+     * 字符串str根据“，”拆分成字符串数组，比把这个数组的每个元素装进一个TreeSet里面，返回这个Set
      * Convenience method to convert a CSV string list to a set. Note that this
      * will suppress duplicates.
      *
@@ -1208,6 +1233,7 @@ public final class StringUtils {
     //-----------------------------------------------------------------------
 
     /**
+     * 检查cs里是否包含了searchChars里有的字符，有返回true,没有返回false
      * <p>Checks if the CharSequence contains any character in the given
      * set of characters.</p>
      * <p>
@@ -1261,6 +1287,7 @@ public final class StringUtils {
     }
 
     /**
+     * 检查cs里是否包含了searchChars里有的字符，有返回true,没有返回false
      * <p>
      * Checks if the CharSequence contains any character in the given set of characters.
      * </p>
@@ -1293,6 +1320,7 @@ public final class StringUtils {
     }
 
     /**
+     * 集合coll里每个元素如果不是最后一个元素都要加上字符串",",最后把他们连起来返回一个新的字符串
      * Convenience method to return a Collection as a CSV String. E.g. useful
      * for <code>toString()</code> implementations.
      *
@@ -1304,6 +1332,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把数组arr里的元素，除了第一个元素，每个元素前都加上字符串delim,再把他们相连组成一个新的字符串返回
      * Convenience method to return a String array as a delimited (e.g. CSV)
      * String. E.g. useful for <code>toString()</code> implementations.
      *
@@ -1326,6 +1355,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把数组arr里的元素，除了第一个元素，每个元素前都加上",",再把他们相连组成一个新的字符串返回
      * Convenience method to return a String array as a CSV String. E.g. useful
      * for <code>toString()</code> implementations.
      *
@@ -1337,6 +1367,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成int,如果解析不了，返回0
      * Converts a String object to Integer value.
      *
      * @param str The String to be converted.
@@ -1347,6 +1378,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成int,如果解析不了，返回param
      * Parse a string object to integer
      *
      * @param str The String to be converted.
@@ -1363,6 +1395,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成Long,如果解析不了，返回defaultValue
      * Parse a string object to Long
      */
     public static long parseLong(String str, long defaultValue) {
@@ -1376,6 +1409,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成long,如果解析不了，返回0
      * Parse a string object to Long
      */
     public static long parseLong(String str) {
@@ -1383,6 +1417,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成short,如果解析不了，返回defaultValue
      * Parse a string object to Short
      */
     public static short parseShort(String str, short defaultValue) {
@@ -1396,6 +1431,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成short,如果解析不了，返回(short) 0
      * Parse a string object to Short
      */
     public static short parseShort(String str) {
@@ -1403,6 +1439,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成short,如果解析不了，返回defaultValue
      * Parse a string object to Byte
      */
     public static byte parseByte(String str, byte defaultValue) {
@@ -1416,6 +1453,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成byte,如果解析不了，返回(byte) 0
      * Parse a string object to Byte
      */
     public static byte parseByte(String str) {
@@ -1423,6 +1461,7 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成boolean,如果解析不了，返回defaultValue
      * Parse a string object to Byte
      */
     public static boolean parseBoolean(String str, boolean defaultValue) {
@@ -1436,12 +1475,19 @@ public final class StringUtils {
     }
 
     /**
+     * 把一个字符串str解析成boolean,如果解析不了，返回false
      * Parse a string object to Byte
      */
     public static boolean parseBoolean(String str) {
         return parseBoolean(str, false);
     }
 
+    /**
+     *  把一个字符串str解析成double,如果解析不了，返回defaultValue
+     * @param str
+     * @param defaultValue
+     * @return
+     */
     public static double parseDouble(String str, double defaultValue) {
         double i = defaultValue;
         try {
@@ -1452,10 +1498,21 @@ public final class StringUtils {
         return i;
     }
 
+    /**
+     * 把一个字符串str解析成double,如果解析不了，返回0
+     * @param str
+     * @return
+     */
     public static double parseDouble(String str) {
         return parseDouble(str, 0);
     }
 
+    /**
+     * 把一个字符串str解析成BigDecimal,如果解析不了，返回defaultValue
+     * @param str
+     * @param defaultValue
+     * @return
+     */
     public static BigDecimal parseBigDecimal(String str, BigDecimal defaultValue) {
         BigDecimal i = defaultValue;
         try {
@@ -1466,10 +1523,19 @@ public final class StringUtils {
         return i;
     }
 
+    /**
+     * 把一个字符串str解析成BigDecimal,如果解析不了，返回BigDecimal.ZERO
+     * @param str
+     * @return
+     */
     public static BigDecimal parseBigDecimal(String str) {
         return parseBigDecimal(str, BigDecimal.ZERO);
     }
 
+    /**
+     *得到一个不以0开头的，随机的六位整数字符串
+     * @return
+     */
     public static String getNo() {
         String str = "";
         str += (int) (Math.random() * 9 + 1);
