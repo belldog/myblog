@@ -24,7 +24,10 @@
     <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 日志输出文件 -->
         <!--这样设置相对路径，日志会产生在tomcat的安装路径下的bin文件夹下-->
-        <file>log/LoggingBack-${byDay}.log</file>
+        <!--<file>log/LoggingBack-${byDay}.log</file>-->
+        <!-- catalina.base是tomcat的一个系统变量，如果如下配置，是一个绝对路径，就是部署文件所在的位置，
+            如果用idea日志默认会在C:\Users\zhangjinwei\.IntelliJIdea2016.2\system\tomcat\Unnamed_my-blog下-->
+        <file>${catalina.base}/log/LoggingBack-${byDay}.log</file>
         <!-- 追加日志到原文件结尾 -->
         <append>true</append>
         <encoder>
@@ -38,7 +41,10 @@
             <!-- 文件滚动日期格式：每天：.YYYY-MM-dd（默认）；每星期：.YYYY-ww；每月：.YYYY-MM -->
             <!-- 每隔半天：.YYYY-MM-dd-a；每小时：.YYYY-MM-dd-HH；每分钟：.YYYY-MM-dd-HH-mm -->
             <!--这样设置相对路径，日志会产生在tomcat的安装路径下的bin文件夹下-->
-            <fileNamePattern>log/log-%d{YYYY-MM-dd-HH}.%i.log</fileNamePattern>
+            <!--<fileNamePattern>log/log-%d{YYYY-MM-dd-HH}.%i.log</fileNamePattern>-->
+           <!-- catalina.base是tomcat的一个系统变量，如果如下配置，是一个绝对路径，就是部署文件所在的位置，
+            如果用idea日志默认会在C:\Users\zhangjinwei\.IntelliJIdea2016.2\system\tomcat\Unnamed_my-blog下-->
+            <fileNamePattern>${catalina.base}/log/log-%d{YYYY-MM-dd-HH}.%i.log</fileNamePattern>
             <!-- 控制归档文件的最大数量的保存，删除旧的文件，默认单位天数 -->
             <maxHistory>7</maxHistory>
             <!-- 设置当前日志的文件的大小，决定日志翻滚 -->
