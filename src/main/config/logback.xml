@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- For assistance related to logback-translator or configuration  -->
-<!-- files in general, please contact the logback user mailing list -->
-<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
-<!--                                                                -->
-<!-- For professional support please see                            -->
-<!--    http://www.qos.ch/shop/products/professionalSupport         -->
-<!--                                                                -->
-<configuration>
+<!-- debug：打印logback内部日志信息，实时查看logback的运行状态，默认为false，不打印 -->
+<!-- scan：配置文件如果发生改变，是否被重新加载，默认为true,重新加载 -->
+<!-- scanPeriod：设置检测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒，默认的时间间隔为1分钟，当scan为true时，此属性生效。 -->
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+    <!-- 设置logger上下文的名字，每个logger都关联到logger上下文，默认上下文名称为“default”。但可以使用<contextName>设置成其他名字，用于区分不同应用程序的记录。一旦设置，不能修改。 -->
+    <contextName>myBlog</contextName>
+    <!-- 时间戳定义，timeReference：使用日志产生日期为时间基准  key:标识此<timestamp> 的名字 datePattern：设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循Java.txt.SimpleDateFormat的格式。-->
+    <timestamp key="byDay" datePattern="yyyy-MM-dd" timeReference="contextBirth" />
+    <!--定义日志文件的存储地址的一个变量， 勿在 LogBack 的配置中使用相对路径，可以使用系统变量 -->
+    <!-- <property name="LOG_HOME" value="${app.home}/log" /> -->
+    <!-- 定义一个变量，下文可以使用${xxx}这种形式来使用 -->
+    <property name="LOG_HOME" value="log" />
+    <!-- name指定appender名称，class指定appender的全限定名-->
+    <!-- 控制台输出，生产环境将请stdout去掉 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <Target>System.out</Target>
-        <Encoding>UTF-8</Encoding>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %5p [%t] [%c{1}]:%L - %m%n</pattern>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n是换行符 -->
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+    <!-- 按照每天生成日志文件 -->
     <appender name="logfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <!--See http://logback.qos.ch/manual/appenders.html#RollingFileAppender-->
-        <!--and http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy-->
-        <!--for further documentation-->
-        <Encoding>UTF-8</Encoding>
+        <!-- 日志输出文件 -->
+        <!--这样设置相对路径，日志会产生在tomcat的安装路径下的bin文件夹下-->
+        <file>log/LoggingBack-${byDay}.log</file>
+        <!-- 追加日志到原文件结尾 -->
+        <append>true</append>
         <encoder>
-            <pattern>%d %p [%t] [%c]:%L - %m%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>DEBUG</level>
-        </filter>
+        <!-- timebasedrollingpolicy：演示时间和大小为基础的日志文件归档 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/%d{yyyy-MM-dd-HH'.log'}</fileNamePattern>
+            <!-- 归档的日志文件的路径，例如今天是2013-12-21日志，当前写的日志文件路径为file节点指定。 -->
+            <!--可以将此文件与file指定文件路径设置为不同路径，从而将当前日志文件或归档日志文件置不同的目录。 -->
+            <!--而2013-12-21的日志文件在由fileNamePattern指定。%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
+            <!-- 文件滚动日期格式：每天：.YYYY-MM-dd（默认）；每星期：.YYYY-ww；每月：.YYYY-MM -->
+            <!-- 每隔半天：.YYYY-MM-dd-a；每小时：.YYYY-MM-dd-HH；每分钟：.YYYY-MM-dd-HH-mm -->
+            <!--这样设置相对路径，日志会产生在tomcat的安装路径下的bin文件夹下-->
+            <fileNamePattern>log/log-%d{YYYY-MM-dd-HH}.%i.log</fileNamePattern>
+            <!-- 控制归档文件的最大数量的保存，删除旧的文件，默认单位天数 -->
+            <maxHistory>7</maxHistory>
+            <!-- 设置当前日志的文件的大小，决定日志翻滚 -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- 除按日志记录之外，还配置了日志文件不能超过10M(默认)，若超过10M，日志文件会以索引0开始， -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
     <logger name="org.springframework" level="WARN"/>
@@ -37,7 +55,7 @@
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="com.zjw.blog.controller" level="DEBUG"/>
 
-    <root level="ERROR">
+    <root level="DEBUG">
         <appender-ref ref="stdout"/>
         <appender-ref ref="logfile"/>
     </root>

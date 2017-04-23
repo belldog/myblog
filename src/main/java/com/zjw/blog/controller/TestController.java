@@ -1,5 +1,7 @@
 package com.zjw.blog.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,18 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class TestController {
+    private static final Logger logger = LoggerFactory.getLogger(TestController.class);
     @RequestMapping(value = "/belldog.shtml")
     public String test() {
+        logger.debug("belldog");
         return "belldog";
     }
 
     @RequestMapping(value = "/index.shtml")
     public String index() {
+        logger.debug("index");
         return "index";
     }
 
     @RequestMapping(value = "/money.shtml")
     public String money() {
+        logger.debug("money");
         return "money";
     }
 }
