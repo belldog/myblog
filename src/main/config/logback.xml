@@ -53,7 +53,8 @@
     </appender>
     <!--日志异步写到数据库 -->
     <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
-        <!--日志异步到数据库 -->
+        <!--日志异步到数据库 ，如下配置logback会打出一条error日志，但是并不影响使用，不知道为什么，可能是
+        dataSource识别不了他的子元素，但是明明又能连数据库，真是奇怪-->
         <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
             <!--连接池 -->
             <dataSource class="com.alibaba.druid.pool.DruidDataSource">
