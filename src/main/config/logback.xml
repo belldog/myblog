@@ -9,9 +9,6 @@
     <!-- 时间戳定义，timeReference：使用日志产生日期为时间基准  key:标识此<timestamp> 的名字 datePattern：设置将当前时间（解析配置文件的时间）转换为字符串的模式，遵循Java.txt.SimpleDateFormat的格式。-->
     <timestamp key="byDay" datePattern="yyyy-MM-dd" timeReference="contextBirth" />
     <!--定义日志文件的存储地址的一个变量， 勿在 LogBack 的配置中使用相对路径，可以使用系统变量 -->
-    <!-- <property name="LOG_HOME" value="${app.home}/log" /> -->
-    <!-- 定义一个变量，下文可以使用${xxx}这种形式来使用 -->
-    <property name="LOG_HOME" value="log" />
     <!-- name指定appender名称，class指定appender的全限定名-->
     <!-- 控制台输出，生产环境将请stdout去掉 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
@@ -54,6 +51,19 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
+    <!--日志异步写到数据库 -->
+    <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+        <!--日志异步到数据库 -->
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <!--连接池 -->
+            <dataSource class="com.alibaba.druid.pool.DruidDataSource">
+                <driverClass>com.mysql.jdbc.Driver</driverClass>
+                <url>jdbc:mysql://localhost:3306/zjw_blog</url>
+                <user>root</user>
+                <password>2222</password>
+            </dataSource>
+        </connectionSource>
+    </appender>
     <logger name="org.springframework" level="ERROR" />
     <logger name="org.hibernate" level="ERROR" />
     <logger name="org.hibernate.SQL" level="ERROR" />
@@ -63,5 +73,6 @@
     <root level="DEBUG">
         <appender-ref ref="stdout"/>
         <appender-ref ref="logfile"/>
+        <appender-ref ref="DB"/>
     </root>
 </configuration>
