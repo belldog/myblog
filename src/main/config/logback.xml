@@ -28,7 +28,7 @@
         <!-- catalina.base是tomcat的一个系统变量，如果如下配置，是一个绝对路径，就是部署文件所在的位置，
             如果用idea日志默认会在C:\Users\zhangjinwei\.IntelliJIdea2016.2\system\tomcat\Unnamed_my-blog下-->
         <file>${catalina.base}/log/LoggingBack-${byDay}.log</file>
-        <!-- 追加日志到原文件结尾 -->
+        <!-- 如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true -->
         <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
@@ -54,12 +54,11 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
     </appender>
-    <logger name="org.springframework" level="WARN"/>
-    <logger name="org.springframework.remoting" level="WARN"/>
-    <logger name="org.springframework.scheduling.quartz" level="WARN"/>
-    <logger name="org.springframework.data.jpa" level="DEBUG"/>
-    <logger name="ch.qos.logback" level="WARN"/>
-    <logger name="com.zjw.blog.controller" level="DEBUG"/>
+    <logger name="org.springframework" level="ERROR" />
+    <logger name="org.hibernate" level="ERROR" />
+    <logger name="org.hibernate.SQL" level="ERROR" />
+    <logger name="org.hibernate.transaction" level="ERROR" />
+    <logger name="com.zjw.blog" level="INFO"/>
 
     <root level="DEBUG">
         <appender-ref ref="stdout"/>

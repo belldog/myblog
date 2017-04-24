@@ -16,19 +16,19 @@ public class TestController {
     private static final Logger logger = LoggerFactory.getLogger(TestController.class);
     @RequestMapping(value = "/belldog.shtml")
     public String test() {
-        logger.debug("belldog");
+        logger.info("belldog");
         return "belldog";
     }
 
     @RequestMapping(value = "/index.shtml")
     public String index() {
-        logger.debug("index");
+        logger.info("index");
         return "index";
     }
 
     @RequestMapping(value = "/money.shtml")
     public String money() {
-        logger.debug("money");
+        logger.info("money");
         return "money";
     }
 }
