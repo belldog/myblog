@@ -1544,4 +1544,18 @@ public final class StringUtils {
         }
         return str;
     }
+
+    /**
+     * 参数是否是有效整数
+     *
+     * @param obj 参数（对象将被调用string()转为字符串类型）
+     * @return 是否是整数
+     */
+    public static boolean isInt(Object obj) {
+        if (hasLength(obj.toString()))
+            return false;
+        if (obj instanceof Integer)
+            return true;
+        return obj.toString().matches("[-+]?\\d+");
+    }
 }
