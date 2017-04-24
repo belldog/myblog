@@ -15,7 +15,7 @@
     <!-- name指定appender名称，class指定appender的全限定名-->
     <!-- 控制台输出，生产环境将请stdout去掉 -->
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+        <encoder charset="UTF-8">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度，%msg：日志消息，%n是换行符 -->
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
