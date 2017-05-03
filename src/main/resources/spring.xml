@@ -58,5 +58,6 @@
     </context:component-scan>
     <!--引入hibernate配置-->
     <import resource="spring-hibernate.xml" />
-
+    <!--引入shiro配置-->
+    <import resource="spring-shiro.xml" />
 </beans>

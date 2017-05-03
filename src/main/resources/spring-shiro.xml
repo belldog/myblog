@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--配置securityManager-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--要配置几个属性，这几个应该有默认的，可配可不配，有选择的配-->
+        <!--配置realm-->
+        <property name="realm" ref="authorizeProvider" />
+        <!--配置session的管理方式-->
+        <!--<property name="sessionMode" value="native"/>-->
+        <!--配置缓存，如果不使用缓存，可以不配，使用的话举个例子，已经登陆了，再到登录页面无论输入什么用户名密码都能登进，除非先登出，再登录-->
+        <!--<property name="cacheManager" ref="cacheManager"/>-->
+    </bean>
+    <!--
+    	配置 Realm
+        直接配置实现了 org.apache.shiro.realm.Realm 接口的 bean，这个很重要，后面重点分析
+    -->
+    <bean id="authorizeProvider" class="com.zjw.blog.ext.AuthorizeProvider">
+    </bean>
+    <!--
+    配置 LifecycleBeanPostProcessor. 可以自定的来调用配置在 Spring IOC 容器中 shiro bean 的生命周期方法.例如init() 和 destroy() 等等一些方法
+    -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <!--
+     启用 IOC 容器中使用 shiro 的注解. 但必须在配置了 LifecycleBeanPostProcessor 之后才可以使用. 如果不使用注解可以不配置这两个bean
+    -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <!--
+     配置 ShiroFilter.
+     id 必须和 web.xml 文件中配置的 DelegatingFilterProxy 的 <filter-name> 一致.
+    若不一致, 则会抛出: NoSuchBeanDefinitionException. 因为 Shiro 会来 IOC 容器中查找和 <filter-name> 名字对应的 filter bean.
+    -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <!--配置登录页面-->
+        <property name="loginUrl" value="/login.jsp"/>
+        <!--配置登陆成功页面-->
+        <property name="successUrl" value="/list.jsp"/>
+        <!--配置没有权限的页面-->
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+        <property name="filterChainDefinitions">
+            <value>
+              <!--  /login.jsp = anon
+                /shiro/login = anon
+                /shiro/logout = logout
+                /user.jsp = roles[user]
+                /admin.jsp = roles[admin]
+                # 任何页面都需要权限认证:
+                /** = authc-->
+                /** = anon
+            </value>
+        </property>
+    </bean>
+</beans>

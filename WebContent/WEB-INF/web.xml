@@ -71,6 +71,31 @@
         <!--这个地址是一切的源头,请求必须符合这个才能进入springMVC-->
         <url-pattern>*.shtml</url-pattern>
     </servlet-mapping>
+
+    <!--
+	1. 配置  Shiro 的 shiroFilter.
+	2. DelegatingFilterProxy 实际上是 Filter 的一个代理对象. 默认情况下, Spring 会到 IOC 容器中查找和
+	<filter-name> 对应的 filter bean. 也可以通过 targetBeanName 的初始化参数来配置 filter bean 的 id.
+	-->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理 -->
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>*.shtml</url-pattern>
+        <!--2.4版本的servlet规范在部属描述符中新增加了一个<dispatcher>元素，这个元素有四个可能的值：即REQUEST,FORWARD,INCLUDE和ERROR，可以在一个<filter-mapping>元素中加入任意数目的<dispatcher>，使得filter将会作用于直接从客户端过来的request，通过forward过来的request，通过include过来的request和通过<error-page>过来的request。如果没有指定任何< dispatcher >元素，默认值是REQUEST。-->
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
     
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
