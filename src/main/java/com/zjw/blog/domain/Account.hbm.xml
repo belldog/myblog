@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.zjw.blog.domain.Account" table="tb_account"
+           dynamic-insert="true" dynamic-update="true">
+        <id name="id" type="java.lang.Long">
+            <column name="id">
+                <comment>帐号id</comment>
+            </column>
+            <generator class="assigned"/>
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="user_name" default="0" unique-key="uk_account_user_name">
+                <comment>用户名</comment>
+            </column>
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password">
+                <comment>密码</comment>
+            </column>
+        </property>
+        <property name="Status" type="java.lang.Boolean">
+            <column name="status" default="0">
+                <comment>是否启用</comment>
+            </column>
+        </property>
+        <property name="createDatetime" type="java.util.Date">
+            <column name="created_datetime">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+        <many-to-one name="role"
+                     class="com.zjw.blog.domain.Role" lazy="false" fetch="join">
+            <column name="role_id"/>
+        </many-to-one>
+        <property name="token" type="java.lang.String">
+            <column name="token">
+                <comment>令牌</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

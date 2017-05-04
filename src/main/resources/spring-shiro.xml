@@ -12,10 +12,7 @@
         <!--配置缓存，如果不使用缓存，可以不配，使用的话举个例子，已经登陆了，再到登录页面无论输入什么用户名密码都能登进，除非先登出，再登录-->
         <!--<property name="cacheManager" ref="cacheManager"/>-->
     </bean>
-    <!--
-    	配置 Realm
-        直接配置实现了 org.apache.shiro.realm.Realm 接口的 bean，这个很重要，后面重点分析
-    -->
+    <!--配置 Realm直接配置实现了 org.apache.shiro.realm.Realm 接口的 bean-->
     <bean id="authorizeProvider" class="com.zjw.blog.ext.AuthorizeProvider">
     </bean>
     <!--

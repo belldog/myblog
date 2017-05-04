@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2012-2-25 10:07:54 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.zjw.blog.domain.Permission" table="tb_permission"
+           dynamic-insert="true" dynamic-update="true">
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="name" type="string">
+            <column name="name"></column>
+        </property>
+        <property name="code" type="string">
+            <column name="code"></column>
+        </property>
+    </class>
+</hibernate-mapping>
