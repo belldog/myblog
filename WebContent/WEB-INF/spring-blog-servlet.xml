@@ -74,4 +74,12 @@
     </bean>
 
     <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/index.jsp"/>
+            <bean class="com.zjw.blog.interceptor.TestInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>
